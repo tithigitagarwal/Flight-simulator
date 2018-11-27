@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
+@import "~nouislider/distribute/nouislider.min.css";
+html, body { height: 100%; width: 100%; margin: 0; padding: 0; background-color: #f4f8fa; font-family: 'Roboto', sans-serif }
+* { box-sizing: border-box; margin: 0; padding: 0  }
+.container-fluid { max-width:1170px; width:100%; height: 100%; margin: 0 auto; padding: 70px 0 }
+.col-4 { width: 33.33333333%; padding: 0 15px; float: left; }
+.col-5 { width: 41.66666667%; padding: 0 15px; float: left; }
+.col-7 { width: 58.33333333%; padding: 0 15px; float: left; }
+.col-8 { width: 66.66666667%; padding: 0 15px; float: left; }
+.text-right { text-align: right }
+ul li { list-style: none }
+a { text-decoration: none }
+.form-group { width: 100%; margin-bottom: 20px }
+.form-group input, .form-group .ngx-datepicker-container .ngx-datepicker-input { border: 0!important; border-bottom: 1px solid rgba(0,0,0,0.5)!important; padding: 10px!important; width: 100%!important }
+button { background: #4285f4; color: #fff; margin: 0 auto; float: none; padding: 9px 25px; font-size: 15px; text-transform: uppercase; border: 0; display: block }
+button:hover { cursor: pointer; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.1); box-shadow: 0 1px 1px rgba(0,0,0,0.1) }
+button:disabled { background: rgb(221, 221, 221); color: rgb(128, 128, 128);  cursor: not-allowed }
+.alert { color: #a94442; background-color: #f2dede; padding: 10px 15px;  margin: 15px 0; border: 1px solid #ebccd1; border-radius: 4px }
+.ngx-datepicker-container .ngx-datepicker-calendar-container { z-index: 2 }
+.noUi-connect { background: #4285f4}
+
+/*Media*/
+
+@media screen and (max-width: 768px) {
+    .col-4, .col-8 { width: 100% }
+}
+@media screen and (max-width: 480px) {
+    .col-7, .col-5 { width: 100% }
+}

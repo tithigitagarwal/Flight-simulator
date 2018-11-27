@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <div class="col-4">
+    <div class="search-wrap">
+      <ul>
+        <li>
+          <a href="#" (click)="tabSelected = false; searchForm.reset();" [ngClass]="{'active':tabSelected === false}">One Way</a>
+        </li>
+        <li>
+          <a href="#" (click)="tabSelected = true; searchForm.reset();" [ngClass]="{'active':tabSelected === true}">Return</a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <form  (ngSubmit)="search(searchForm)"  #searchForm="ngForm">
+          <div class="form-group">
+            <input type="text" name="origin" [(ngModel)]= "searchForm.origin" placeholder="Origin"  #origin="ngModel" required/>
+            <div *ngIf="origin.invalid && (origin.dirty || origin.touched)" class="alert">
+              <div *ngIf="origin.errors.required">
+                Origin is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" name="destination" [(ngModel)]= "searchForm.destination" placeholder="Final" #destination="ngModel" required />
+            <div *ngIf="destination.invalid && (destination.dirty || destination.touched)" class="alert">
+              <div *ngIf="destination.errors.required">
+                  Destination is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <ng-datepicker  name="startDate" [options]="optionsStartDate" [(ngModel)]= "searchForm.startDate" #startDate="ngModel" (ngModelChange)="setEndDate($event)">
+            </ng-datepicker>
+            <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)" class="alert">
+              <div *ngIf="startDate.errors.required">
+                  Depart date is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="tabSelected && searchForm.startDate">        
+            <ng-datepicker  name="endDate" [options]="optionsEndDate" [(ngModel)]= "searchForm.endDate" #endDate="ngModel">    
+            </ng-datepicker>
+            <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)" class="alert">
+              <div *ngIf="endDate.errors.required">
+                  Depart date is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="number" name="totalPassenger" [(ngModel)]= "searchForm.totalPassenger" #totalPassenger="ngModel" required placeholder="Total Passanger" />
+            <div *ngIf="totalPassenger.invalid && (totalPassenger.dirty || totalPassenger.touched)" class="alert">
+              <div *ngIf="totalPassenger.errors.required">
+                  Passanger count is required.
+              </div>
+            </div>
+          </div>
+          <button type="submit" [disabled]="!searchForm.form.valid">Find</button>
+        </form>
+      </div>
+    </div>
+    <div class="range-filter">
+      <h2>Filter Price</h2>
+      <div class="slider-wrap">
+        <nouislider [config]="sliderConfig" [(ngModel)]="someRange" (ngModelChange)="onRangeChange($event)"></nouislider>
+      </div>
+    </div>
+  </div>
+  <div class="col-8" *ngIf="formSubmit">
+    <div class="search-result">
+       <div class="filter-header">
+        <div class="col-7">
+          <ul class="travel-locations">
+            <li>{{searchForm.value.origin}}
+            </li>
+            <li>
+              {{searchForm.value.destination}}
+            </li>
+            <li *ngIf="tabSelected" >
+              <span>></span>{{searchForm.value.origin}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-5 text-right">
+          <p>Departure : <span>{{searchForm.value.startDate | date: 'dd/MM/yyyy'}}</span></p>
+        </div>
+      </div>
+      <div  class="filter-info">
+        <ul *ngFor="let flight of mainOneWaySearch" class="flight-list">
+          <li>
+            <h5>{{flight.id}}</h5>
+            <ul class="travel-locations">
+              <li>{{flight.origin}}</li>              
+              <li>{{flight.destination}}</li>
+            </ul>
+            <p>Departure : <span>{{flight.departureTime}}</span></p>
+            <p>Arrival : <span>{{flight.arrivalTime}}</span></p>
+            <h3>Rs. {{flight.price}}</h3>
+          </li>
+        </ul>
+      </div> 
+      <div  *ngIf="tabSelected">
+        <ul *ngFor="let flight of secoundFlights" class="flight-list">
+          <li>
+            <h6>{{flight.id}}</h6>
+            <ul class="travel-locations">
+              <li>{{flight.origin}}</li>              
+              <li>{{flight.destination}}</li>
+            </ul>
+            <p>Departure : <span>{{flight.departureTime}}</span></p>
+            <p>Arrival : <span>{{flight.arrivalTime}}</span></p>
+            <h3>Rs. {{flight.price}}</h3>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <p *ngIf="!mainOneWaySearch || secoundFlights ">No Flights Found</p>
+  </div>
+</div>
